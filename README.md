@@ -1,3 +1,31 @@
+# ER Platform API (RESTful) - Built with TypeScript and NestJS
+#### The ER Platform API provides a set of endpoints for managing partnerships, event contributions, and generating key statistics. It is built using TypeScript and NestJS, ensuring type safety, maintainability, and scalability. The API is designed to serve the External Relations (ER) Platform, allowing the External Relations department to efficiently manage and track their partnerships and contributions to various events.
+## Key Features : 
+### Partner Management: 
+- Create, Update, Delete Partners: Manage partner profiles, including details such as name, location, contributions, and communication status for each event.
+- Partner Profile Details: Track specific contributions (e.g., financial, media) and associate partners with different events.
+### Event Contributions:
+- Associate Partners with Events: Link partners to specific events, recording the type of contribution (financial, media, or other).
+- Track Financial Contributions: For financial contributions, store and retrieve amounts associated with each partner and event
+### Statistics: 
+- Event-Based Statistics: Display a list of all partners for each event along with their financial contribution percentage, shown via a pie chart.
+- Categorize Partners: Automatically categorize partners as Gold, Silver, or Bronze based on their contribution levels to the event.
+## Tech Stack : 
+- TypeScript
+- PostgeSQL
+- Nest js
+- Prisma ORM
+- JWT
+  ### Installation :
+  ``` bash
+  git clone https://github.com/hikiuzrx/ER-Managment-API.git
+  
+  cd ER-Managment-API.git
+  
+  npm install
+  
+  npm run start
+  
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
