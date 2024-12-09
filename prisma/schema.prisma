@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model User {
+  userId Int  @id @default(autoincrement())
+  email String @unique
+  username String @unique
+  password String 
+}
+model Event {
+  eventId Int @id @default(autoincrement())
+  name String @unique
+  date DateTime @unique
+  description String?
+  contributions Contribution[]
+}
+model Partner {
+ partnerId Int @id @default(autoincrement())
+ email String @unique
+ location String 
+ category PartnerCategory
+ phoneNumber String @unique
+ fullName String @unique
+ contributions Contribution[]
+}
+model Contribution {
+  contributorId Int 
+  comState communicationState
+  contributor Partner @relation(fields: [contributorId], references: [partnerId])
+  contributionType ContributionType
+  content String
+  event Event @relation(fields: [eventId],references: [eventId])
+  eventId Int 
+  @@id([contributorId,eventId])
+}
+enum communicationState {
+  pending
+  accepted 
+  rejected
+}
+enum PartnerCategory {
+  Gold 
+  Sliver
+  Bronze
+}
+enum Ptype {
+  guest
+  sponsor 
+  media 
+}
+enum ContributionType {
+  financial 
+  media 
+  other
+}
