@@ -14,6 +14,7 @@ datasource db {
 }
 model User {
   userId Int  @id @default(autoincrement())
+  fullName String @unique
   email String @unique
   username String @unique
   password String 
@@ -60,7 +61,10 @@ enum Ptype {
   media 
 }
 enum ContributionType {
-  financial 
-  media 
-  other
+  Finance_Contribution
+  IT_Services
+  Event_Location_Provider
+  TV_Coverage
+  Media_Partner
+  Radio_Interview
 }
