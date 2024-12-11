@@ -15,22 +15,22 @@ export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
 
   @Post()
-  async create(@Body() createEventDto: Prisma.EventCreateInput) {
+  async addEvent(@Body() createEventDto: Prisma.EventCreateInput) {
     return this.eventsService.createEvent(createEventDto);
   }
 
   @Get()
-  async findAll() {
-    return this.eventsService.findAllEvents();
+  async getEvents() {
+    return this.eventsService.getAllEvents();
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    return this.eventsService.findEventById(Number(id));
+  async getOne(@Param('id') id: string) {
+    return this.eventsService.getEventById(Number(id));
   }
 
   @Put(':id')
-  async replace(
+  async updateOne(
     @Param('id') id: string,
     @Body() replaceEventDto: Prisma.EventUpdateInput,
   ) {

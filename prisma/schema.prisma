@@ -52,7 +52,7 @@ enum communicationState {
 }
 enum PartnerCategory {
   Gold 
-  Sliver
+  Silver
   Bronze
 }
 enum Ptype {

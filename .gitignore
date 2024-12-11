@@ -45,6 +45,7 @@ lerna-debug.log*
 # temp directory
 .temp
 .tmp
+docker-compose.yml
 
 # Runtime data
 pids

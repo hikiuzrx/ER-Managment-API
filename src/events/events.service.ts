@@ -12,11 +12,11 @@ export class EventsService {
     });
   }
 
-  async findAllEvents() {
+  async getAllEvents() {
     return await this.prisma.event.findMany();
   }
 
-  async findEventById(eventId: number) {
+  async getEventById(eventId: number) {
     return await this.prisma.event.findUnique({
       where: { eventId },
     });
