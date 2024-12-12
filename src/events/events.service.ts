@@ -1,37 +1,100 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { DbService } from '../db/db.service';
 import { Prisma } from '@prisma/client';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 @Injectable()
 export class EventsService {
   constructor(private readonly prisma: DbService) {}
 
   async createEvent(data: Prisma.EventCreateInput) {
-    return await this.prisma.event.create({
+    return this.prisma.event.create({
       data,
     });
   }
 
   async getAllEvents() {
-    return await this.prisma.event.findMany();
+    return this.prisma.event.findMany();
   }
 
   async getEventById(eventId: number) {
-    return await this.prisma.event.findUnique({
+    //check that the provided event ID is a number
+    if (isNaN(eventId)) {
+      throw new BadRequestException('Invalid eventId');
+    }
+
+    const event = await this.prisma.event.findUnique({
       where: { eventId },
     });
+
+    //check if the wanted event was found
+    if (!event) {
+      throw new NotFoundException(`event with ID ${eventId} not found.`);
+    }
+
+    return event;
   }
 
   async updateEvent(eventId: number, data: Prisma.EventUpdateInput) {
-    return await this.prisma.event.update({
-      where: { eventId },
-      data,
-    });
+    //check that the provided event ID is a number
+    if (isNaN(eventId)) {
+      throw new BadRequestException('Invalid eventId');
+    }
+
+    try {
+      const updatedEvent = await this.prisma.event.update({
+        where: { eventId },
+        data,
+      });
+
+      //check if the wanted event was found
+      if (!updatedEvent) {
+        throw new NotFoundException(`event with ID ${eventId} not found.`);
+      }
+
+      return updatedEvent;
+    } catch (error) {
+      //throw error if it occurs
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new BadRequestException(
+          'Unable to update event due to foreign key constraints.',
+        );
+      }
+
+      throw error;
+    }
   }
 
   async deleteEvent(eventId: number) {
-    return await this.prisma.event.delete({
-      where: { eventId },
-    });
+    //check that the provided event ID is a number
+    if (isNaN(eventId)) {
+      throw new BadRequestException('Invalid eventId');
+    }
+
+    try {
+      const deletedEvent = await this.prisma.event.delete({
+        where: { eventId },
+      });
+
+      //check if the wanted event was found
+      if (!deletedEvent) {
+        throw new NotFoundException(`event with ID ${eventId} not found.`);
+      }
+
+      return deletedEvent;
+    } catch (error) {
+      //throw error if it occurs
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new BadRequestException(
+          'Unable to delete event due to foreign key constraints.',
+        );
+      }
+
+      throw error;
+    }
   }
 }
