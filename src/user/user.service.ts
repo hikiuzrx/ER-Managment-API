@@ -1,7 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotAcceptableException } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
 import { DbService } from 'src/db/db.service';
 import * as bcrypt from 'bcrypt'
+import { EmptyError } from 'rxjs';
 type updateData = [string,string]
 @Injectable()
 export class UserService {
@@ -48,15 +49,28 @@ export class UserService {
                }
           }) 
      }
-     retriveUser(userId : number):Promise<User>{
-          return  this.dbService.user.findFirst({
-               where:{
-                    userId
-               }
-          })
+     retriveUserById(userId : number ):Promise<User>{
+       return this.dbService.user.findFirst({
+          where:{
+               userId
+          }
+       })
      }
+     retriveUserByEmail(email : string ):Promise<User>{
+          return this.dbService.user.findFirst({
+             where:{
+                  email
+             }
+          })
+        }
+        retriveUserByUsername(username : string ):Promise<User>{
+          return this.dbService.user.findFirst({
+             where:{
+                  username
+             }
+          })
+        }
      async UpdateUser(id:number, updateData :updateData ):Promise<User> {
-          var possibleUser :User
           switch (updateData[0]){
           case 'fullName':
           var user:User = await this.dbService.user.findFirst({
@@ -128,6 +142,9 @@ export class UserService {
                     })
                }
         }
+     }
+     async comparePassword (user:User,password:string):Promise<boolean>{
+          return bcrypt.compare(password,user.password)
      }
      async deleteUser(id:number ):Promise<User>{
           return await this.dbService.user.delete({

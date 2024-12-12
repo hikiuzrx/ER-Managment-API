@@ -8,10 +8,11 @@ export class UserController {
      constructor(private readonly userSrevice:UserService ){}
      @Get(':id')
      async getUser(@Param('id',ParseIntPipe) id:number) {
-          const user:User = await this.userSrevice.retriveUser(id)
+          const user:User = await this.userSrevice.retriveUserById(id)
           if(!user){
                throw new NotFoundException('there is no user with this user id')
           }
+          return user
      }
      @Patch('id')
      ModifyUserData(
