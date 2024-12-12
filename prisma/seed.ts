@@ -6,22 +6,22 @@ async function main() {
   // Users to seed
   const users = [
     {
-      fullName: 'Alice Johnson',
-      email: 'alice.johnson@example.com',
-      username: 'alicejohnson',
-      password: 'password123', // Consider hashing passwords in a real-world app
+      fullName: 'Gueracha Ramzi Wassim',
+      email: 'ramziwassim@gmail.com',
+      username: 'Hiki',
+      password: 'ramziwassim', // Consider hashing passwords in a real-world app
     },
     {
-      fullName: 'Bob Smith',
-      email: 'bob.smith@example.com',
-      username: 'bobsmith',
-      password: 'securepassword456',
+      fullName: 'Monkey D Luffy',
+      email: 'Monkey.D@gmail.com',
+      username: 'Yonko_Nika',
+      password: 'thousand Suny Go',
     },
     {
-      fullName: 'Charlie Brown',
-      email: 'charlie.brown@example.com',
-      username: 'charliebrown',
-      password: 'mypassword789',
+      fullName: 'Issagi Youichi',
+      email: 'issagiyo@gmail.com',
+      username: 'egoist',
+      password: 'I am a Striker',
     },
   ];
 
