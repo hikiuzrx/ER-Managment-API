@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -12,6 +13,18 @@ export class EventsService {
   constructor(private readonly prisma: DbService) {}
 
   async createEvent(data: Prisma.EventCreateInput) {
+    const event1 = await this.prisma.event.findUnique({
+      where: { name: data.name },
+    });
+
+    const event2 = await this.prisma.event.findUnique({
+      where: { date: data.date },
+    });
+
+    if (event1 || event2) {
+      throw new ConflictException('event already exists');
+    }
+
     return this.prisma.event.create({
       data,
     });

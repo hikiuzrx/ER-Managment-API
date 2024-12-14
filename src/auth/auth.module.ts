@@ -7,12 +7,12 @@ import { UserModule } from 'src/user/user.module';
 @Module({
   imports: [
     JwtModule.register({
-      secret: process.env.ACCESS_TOKEN_SECRET,  // Note: In real applications, use something more secure and environment-specific
-      signOptions: { expiresIn: '15m' },  
+      secret: process.env.ACCESS_TOKEN_SECRET, // Note: In real applications, use something more secure and environment-specific
+      signOptions: { expiresIn: '15m' },
     }),
-    UserModule
+    UserModule,
   ],
   providers: [AuthService],
-  controllers: [AuthController]
+  controllers: [AuthController],
 })
 export class AuthModule {}

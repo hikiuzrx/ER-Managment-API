@@ -25,7 +25,7 @@ async function seed() {
         location: faker.address.city(),
         category: faker.helpers.arrayElement(['Gold', 'Silver', 'Bronze']),
         phoneNumber: faker.phone.number(),
-        fullName: faker.name.fullName(),
+        fullName: faker.person.fullName(),
       },
     });
     partners.push(partner);

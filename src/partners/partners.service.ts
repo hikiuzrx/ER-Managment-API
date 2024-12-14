@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -12,6 +13,22 @@ export class PartnersService {
   constructor(private readonly prisma: DbService) {}
 
   async createPartner(data: Prisma.PartnerCreateInput) {
+    const partner1 = await this.prisma.partner.findUnique({
+      where: { email: data.email },
+    });
+
+    const partner2 = await this.prisma.partner.findUnique({
+      where: { phoneNumber: data.phoneNumber },
+    });
+
+    const partner3 = await this.prisma.partner.findUnique({
+      where: { fullName: data.fullName },
+    });
+
+    if (partner1 || partner2 || partner3) {
+      throw new ConflictException('partner already exists');
+    }
+
     return this.prisma.partner.create({
       data,
     });

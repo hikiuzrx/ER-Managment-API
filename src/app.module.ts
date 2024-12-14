@@ -8,7 +8,7 @@ import { EventsModule } from './events/events.module';
 import { PartnersModule } from './partners/partners.module';
 
 @Module({
-  imports: [DbModule, EventsModule, PartnersModule,AuthModule, UserModule],
+  imports: [DbModule, EventsModule, PartnersModule, AuthModule, UserModule],
   controllers: [AppController],
   providers: [AppService],
 })
