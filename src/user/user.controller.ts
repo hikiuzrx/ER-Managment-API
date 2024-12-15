@@ -7,15 +7,12 @@ import {
   Param,
   ParseIntPipe,
   Patch,
-  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from '@prisma/client';
-import { AuthGuard } from 'src/auth/auth.guard';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('User')
-@UseGuards(AuthGuard)
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
